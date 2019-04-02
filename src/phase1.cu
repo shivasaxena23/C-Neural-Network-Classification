@@ -95,6 +95,9 @@ p.y=y;
 
 return p;
 }
+
+extern "C" {
+
 matrix transpose(matrix A){
 	matrix C;
 	C=setup_matrix(A.y,A.x);
@@ -108,8 +111,11 @@ matrix transpose(matrix A){
 	cudaMemcpy(C.m,d_C,(C.x*C.y)*sizeof(float), cudaMemcpyDeviceToHost);
 	return C;
 }
+}
 
 
+
+extern "C" {
 
 matrix matmul(matrix A, matrix B){
 	if ((A.y==B.x))
@@ -141,19 +147,22 @@ matrix matmul(matrix A, matrix B){
 	}
 
 }
+}
 //extern C
 extern "C" {
 void h_addmat(float *B, int nx, int ny){
 
 		for (int i =0;i<nx;i++){
 			for(int j=0;j<ny;j++){
-	      printf("%.6f ",B[i*ny+j]);
+	      //printf("%.6f ",B[i*ny+j]);
 	    }
-	    printf("\n");
+	    //printf("\n");
 		}
 		return;
 }
+}
 
+extern "C" {
 
 matrix add_mat(matrix A, matrix B){
 	if ((A.x==B.x)&&(A.y==B.y))
@@ -177,7 +186,6 @@ matrix add_mat(matrix A, matrix B){
 
 		h_addmat(C.m,C.x,C.y);
 
-		printf("%p\n",C.m);
 
 		//printf("%d\n",bytes);
 		//sprintf("%lu\n",sizeof(C.m));
@@ -195,6 +203,9 @@ matrix add_mat(matrix A, matrix B){
 
 }
 }
+
+extern "C" {
+
 matrix multiply(matrix A, matrix B){
 	if ((A.x==B.x)&&(A.y==B.y))
 	{	matrix C;
@@ -227,6 +238,10 @@ matrix multiply(matrix A, matrix B){
 	}
 
 }
+
+}
+
+extern "C" {
 
 matrix sub_mat(matrix A, matrix B){
 	if ((A.x==B.x)&&(A.y==B.y))
@@ -261,6 +276,10 @@ matrix sub_mat(matrix A, matrix B){
 
 }
 
+}
+
+extern "C" {
+
 matrix divide(matrix A, matrix B){
 	if ((A.x==B.x)&&(A.y==B.y))
 	{	matrix C;
@@ -294,6 +313,7 @@ matrix divide(matrix A, matrix B){
 
 }
 
+}
 /*
 int main( int argc, char *argv[])
 {
