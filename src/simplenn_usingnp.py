@@ -7,12 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1PbBmwwyavFKwRglzvSCFLKWDvsJPGToz
 """
 
-
 import numpy as np
 import matplotlib.pyplot as plt
-import sklearn
-import sklearn.datasets
-import sklearn.linear_model
 import math
 import pandas as pd
 
@@ -30,15 +26,6 @@ def sigmoid(x):
     """
     s = 1/(1+np.exp(-x))
     return s
-
-def load_extra_datasets():  
-    N = 200
-    gaussian_quantiles = sklearn.datasets.make_gaussian_quantiles(mean=None, cov=0.7, n_samples=N, n_features=2, n_classes=2, shuffle=True, random_state=None)
-    return  gaussian_quantiles
-
-gaussian_quantiles= load_extra_datasets()
-X, Y = gaussian_quantiles
-X, Y = X.T, Y.reshape(1, Y.shape[0])
 
 df = pd.read_csv('data.csv')
 
@@ -325,19 +312,3 @@ predictions.shape
 print ('Accuracy: %d' % float((np.sum(predictions == Y)/Y.shape[1])*100) + '%')
 
 predictions.shape
-
-
-
-# Running the model with diffrent number of neurons in the hiddern layer
-
-plt.figure(figsize=(16, 32))
-hidden_layer_sizes = [1, 2, 3, 4, 5, 20, 50]
-for i, n_h in enumerate(hidden_layer_sizes):
-    plt.subplot(5, 2, i+1)
-    plt.title('Hidden Layer of size %d' % n_h)
-    parameters = nn_model(X, Y, n_h, num_iterations = 5000)
-    plot_decision_boundary(lambda x: predict(parameters, x.T), X, Y)
-    predictions = predict(parameters, X)
-    accuracy = float((np.dot(Y,predictions.T) + np.dot(1-Y,1-predictions.T))/float(Y.size)*100)
-    print ("Accuracy for {} hidden units: {} %".format(n_h, accuracy))
-
