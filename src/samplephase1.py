@@ -228,7 +228,7 @@ if __name__ == '__main__':
     print(a)
     print(b)
 
-    c_p = cuda_divide(a,b)
+    c_p = cuda_add_mat(a,b)
 
     print(c_p.shape)
     print(c_p)
