@@ -13,6 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import pandas as pd
+from wrapper import *
 
 # %matplotlib inline
 
@@ -113,17 +114,20 @@ def forward_propagation(X, parameters):
     b2 = parameters['b2']
 
     # Implement Forward Propagation to calculate A2 (probabilities)
-    Z1 = np.dot(W1,X) + b1
+    #print("W ",W1.shape)
+    #print("Z ",X.shape)
+    #print("Bias ",b1.shape)
+    Z1 = cuda_matmul(W1,X) + b1
     A1 = np.tanh(Z1)
-    Z2A = np.dot(W2,A1)
-    Z2 = np.dot(W2,A1) + b2
+    Z2A = cuda_matmul(W2,A1)
+    Z2 = cuda_matmul(W2,A1) + b2
     A2 = sigmoid(Z2)
 
     cache = {"Z1": Z1,
              "A1": A1,
              "Z2": Z2,
              "A2": A2}
-    print("A2",np.dot(W1,X))
+    print("A2",cuda_matmul(W1,X),W1.shape,X.shape)
     return A2, cache
 
 # Gcompute_cost

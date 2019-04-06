@@ -129,7 +129,6 @@ matrix matmul(matrix A, matrix B){
 		cudaMalloc((void **) &d_C, ((C.x*C.y)*sizeof(float)));
 		cudaMemcpy(d_A,A.m, (A.x*A.y)*sizeof(float), cudaMemcpyHostToDevice );
 		cudaMemcpy(d_B,B.m, (B.x*B.y)*sizeof(float), cudaMemcpyHostToDevice );
-		printf("%d %d\n",C.x,C.y);
 		dim3 block(32,32);
 		dim3 grid(1,1);
 		MatrixMul<<<grid,block>>>(d_A,d_B,d_C,A.x,A.y,B.y);

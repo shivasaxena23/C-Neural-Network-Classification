@@ -221,17 +221,17 @@ def cuda_divide(a,b):
 # testing, sum of two arrays of ones and output head part of resulting array
 if __name__ == '__main__':
 
-    a = np.random.rand(4,3).astype('float32') * 100
-    b = np.random.rand(4,3).astype('float32') * 100
+    a = np.ones(shape=(9,64)).astype('float32')
+    b = np.ones(shape=(64,542)).astype('float32')
 
 
-    print(a)
-    print(b)
+    print("a",a)
+    print("b",b)
 
-    c_p = cuda_add_mat(a,b)
+    c_p = cuda_matmul(a,b)
 
     print(c_p.shape)
-    print(c_p)
+    print(c_p[2,12])
 
 
 
